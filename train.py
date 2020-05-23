@@ -372,7 +372,12 @@ def train():
     torch.cuda.empty_cache()
     return results
 
-
+#
+#    The entry point for the train
+#
+#    Note: in case of usage of weights which have been already train for example with 100 epochs and we want to
+#          add 50 epochs more, the --epochs parameter must be set to 150
+#
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # Change default to 100 epochs
@@ -391,7 +396,7 @@ if __name__ == '__main__':
     parser.add_argument('--evolve', action='store_true', help='evolve hyperparameters')
     parser.add_argument('--bucket', type=str, default='', help='gsutil bucket')
     parser.add_argument('--cache-images', action='store_true', help='cache images for faster training')
-    # This is defualt pre-trained
+    # This is default pre-trained
     parser.add_argument('--weights', type=str, default='weights/yolov3-spp-ultralytics.pt', help='initial weights path')
     parser.add_argument('--name', default='', help='renames results.txt to results_name.txt if supplied')
     parser.add_argument('--device', default='', help='device id (i.e. 0 or 0,1 or cpu)')
