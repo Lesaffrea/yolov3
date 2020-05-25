@@ -15,9 +15,9 @@ def save_image( image_array, name ):
     tmp_image = Image.fromarray(image_array)
     tmp_image.save(name)
 
-
-
-
+#
+#  Simple small function
+#
 video1 = "./video/video_1.mp4"
 video2 = "./video/video_2.mp4"
 # Use cv2 to get 5 images out of video
@@ -29,6 +29,7 @@ plt.imshow(image_1)
 # We build 3 images
 save_image(image_1, "./video/video_1_1.jpg")
 save_image(fewframes[0][3], "./video/video_1_2.jpg")
+save_image(fewframes[0][5], "./video/video_1_3.jpg")
 
 
 
