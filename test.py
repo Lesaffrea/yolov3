@@ -160,7 +160,7 @@ def test(cfg,
                                     break
 
             # Append statistics (correct, conf, pcls, tcls)
-            stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), tcls))
+            # stats.append((correct.cpu(), pred[:, 4].cpu(), pred[:, 5].cpu(), tcls))
 
         # Plot images
         if batch_i < 1:
@@ -232,10 +232,10 @@ if __name__ == '__main__':
     parser.add_argument('--cfg', type=str, default='cfg/yolov3-spp.cfg', help='*.cfg path')
     #  Change as well
     #  parser.add_argument('--data', type=str, default='data/coco2014.data', help='*.data path')
-    parser.add_argument('--data', type=str, default='data/ppe.data', help='*.data path')
+    parser.add_argument('--data', type=str, default='data/compliance_ppe.data', help='*.data path')
     #  This could change we load the first weights build for ppe .. 300 epcohs
     # parser.add_argument('--weights', type=str, default='weights/yolov3-spp-ultralytics.pt', help='weights path')
-    parser.add_argument('--weights', type=str, default='weights/weight_ppe_15_05_300.pt', help='weights path')
+    parser.add_argument('--weights', type=str, default='weights/last.pt', help='weights path')
     parser.add_argument('--batch-size', type=int, default=16, help='size of each image batch')
     parser.add_argument('--img-size', type=int, default=512, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
@@ -264,13 +264,11 @@ if __name__ == '__main__':
 
     elif opt.task == 'benchmark':  # mAPs at 320-608 at conf 0.5 and 0.7
         y = []
-        padding =[0]
-        np.savetxt('benchmark.txt',padding ,header="Image size 320, 416,512,608 and iou .5 and .7 \n")
         for i in [320, 416, 512, 608]:  # img-size
             for j in [0.5, 0.7]:        # iou-thres
                 t = time.time()
                 r = test(opt.cfg, opt.data, opt.weights, opt.batch_size, i, opt.conf_thres, j, opt.save_json)[0]
-                y.append(r + (time.time() - t,)+ i)
+                y.append(r + (time.time() - t,))
         np.savetxt('benchmark.txt', y, fmt='%10.4g')  # y = np.loadtxt('study.txt')
 
     elif opt.task == 'study':  # Parameter study

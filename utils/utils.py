@@ -13,6 +13,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torchvision
+# We use the progress bar
 from tqdm import tqdm
 
 from . import torch_utils  # , google_utils
@@ -436,7 +437,9 @@ def compute_loss(p, targets, model):  # predictions, targets, model
     loss = lbox + lobj + lcls
     return loss, torch.cat((lbox, lobj, lcls, loss)).detach()
 
-
+#
+#   Call from loss function
+#
 def build_targets(p, targets, model):
     # targets = [image, class, x, y, w, h]
 
@@ -895,6 +898,11 @@ def plot_wh_methods():  # from utils.utils import *; plot_wh_methods()
     fig.savefig('comparison.png', dpi=200)
 
 
+#
+#   plot_iamges used to generate the tile images
+#
+#   Input: tagerts a lidt of the boxes with the id, class, x,y,w,h and the probabiltiy
+#
 def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max_size=640, max_subplots=16):
     tl = 3  # line thickness
     tf = max(tl - 1, 1)  # font thickness
@@ -955,7 +963,7 @@ def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max
                 cls = int(classes[j])
                 color = color_lut[cls % len(color_lut)]
                 cls = names[cls] if names else cls
-                if gt or conf[j] > 0.3:  # 0.3 conf thresh
+                if gt or conf[j] > 0.3:  # 0.3 conf thresh, change to 0.1
                     label = '%s' % cls if gt else '%s %.1f' % (cls, conf[j])
                     plot_one_box(box, mosaic, label=label, color=color, line_thickness=tl)
 
