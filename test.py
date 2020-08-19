@@ -1,3 +1,8 @@
+#
+#
+#  The original detection based on yola. We use some part to build the predict of the final ppe
+#  see final product
+#
 import argparse
 import json
 
