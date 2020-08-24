@@ -93,6 +93,7 @@ def create_modules(module_defs, img_size, cfg):
         elif mdef['type'] == 'yolo':
             yolo_index += 1
             stride = [32, 16, 8]  # P5, P4, P3 strides
+            # panet or yolov4 are not part of the configuration used
             if 'panet' in cfg or 'yolov4' in cfg:  # stride order reversed
                 stride = list(reversed(stride))
             layers = mdef['from'] if 'from' in mdef else []
